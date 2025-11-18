@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محرر الصور بالفرشاة</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>محرر الصور بالفرشاة</h1>
+
+        <div class="api-key-note">
+            <p><strong>ملاحظة هامة:</strong> لاستخدام التطبيق، يرجى فتح الملف <code>api_key.js</code> ولصق مفتاح OpenRouter API الخاص بك. <br>لا تقم برفع هذا الملف إلى مستودع عام (مثل GitHub) للحفاظ على سرية مفتاحك.</p>
+        </div>
+
+        <div class="upload-section">
+            <label for="imageUpload" class="button primary">تحميل صورة</label>
+            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+            <div id="dropArea" class="drop-area">
+                <p>اسحب وأفلت الصورة هنا، أو <span class="highlight">اضغط للتحميل</span></p>
+            </div>
+            <p id="uploadFileName" class="file-name"></p>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="imageCanvas"></canvas>
+            <canvas id="maskCanvas"></canvas>
+        </div>
+
+        <div class="controls-section">
+            <div class="control-group">
+                <label for="brushSize" class="label">حجم الفرشاة:</label>
+                <input type="range" id="brushSize" min="5" max="100" value="20" class="slider">
+                <span id="brushSizeValue" class="value">20</span>
+            </div>
+
+            <div class="control-group switch-group">
+                <input type="checkbox" id="showMaskToggle" class="toggle-switch">
+                <label for="showMaskToggle" class="toggle-label">عرض القناع</label>
+            </div>
+
+            <div class="control-group switch-group">
+                <input type="checkbox" id="featherMaskToggle" class="toggle-switch">
+                <label for="featherMaskToggle" class="toggle-label">تمويه القناع</label>
+            </div>
+        </div>
+
+        <div class="prompt-section">
+            <label for="editPrompt" class="label">اكتب التعديل هنا:</label>
+            <textarea id="editPrompt" placeholder="اكتب التعديل الذي تريده داخل المنطقة المحددة بالفرشاة..."></textarea>
+            <div class="example-prompts">
+                <p class="label">أمثلة:</p>
+                <span class="example-tag" data-prompt="أضف مكياج ناعم مع لمعة خفيفة">أضف مكياج ناعم</span>
+                <span class="example-tag" data-prompt="اجعل الشعر أطول وأكثر كثافة">شعر أطول</span>
+                <span class="example-tag" data-prompt="غيّر لون القميص إلى الأزرق الفاتح">قميص أزرق</span>
+                <span class="example-tag" data-prompt="إزالة الكائن من الصورة">إزالة الكائن</span>
+            </div>
+            <button id="sendEditButton" class="button primary">إرسال للتعديل</button>
+            <div id="statusMessage" class="status-message"></div>
+            <div class="loading-spinner" id="loadingSpinner"></div>
+        </div>
+
+        <div class="result-section" style="display: none;">
+            <h2>النتيجة:</h2>
+            <img id="resultImage" alt="الصورة المعدلة" style="max-width: 100%; height: auto;">
+            <button id="downloadResultButton" class="button secondary">تنزيل النتيجة</button>
+        </div>
+
+        <div class="help-section">
+            <h3>مساعدة:</h3>
+            <p>
+                <strong>كيفية الاستخدام:</strong>
+                <ol>
+                    <li>قم بتحميل صورة باستخدام زر "تحميل صورة" أو عن طريق سحب وإفلات الصورة.</li>
+                    <li>استخدم الفرشاة (على القماش الأبيض) لتحديد المنطقة التي تريد تعديلها. يمكنك تغيير حجم الفرشاة.</li>
+                    <li>بعد تحديد المنطقة، اكتب وصف التعديل المطلوب في مربع النص "اكتب التعديل هنا".</li>
+                    <li>اضغط على "إرسال للتعديل". سيتم إرسال الصورة والقناع والنص إلى نموذج الذكاء الاصطناعي.</li>
+                    <li>عند الانتهاء، ستظهر الصورة المعدلة، ويمكنك تنزيلها.</li>
+                    <li>تأكد من أن المنطقة المحددة ليست فارغة لتجنب رسالة "اختَر جزءًا بالصّفْر".</li>
+                </ol>
+            </p>
+        </div>
+    </div>
+
+    <script type="module" src="api_key.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+:root {
+    --primary-color: #4CAF50; /* أخضر */
+    --primary-hover-color: #45a049;
+    --secondary-color: #008CBA; /* أزرق */
+    --secondary-hover-color: #007bff;
+    --background-color: #f4f7f6;
+    --text-color: #333;
+    --border-color: #ddd;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --warning-color: #ffc107;
+    --error-color: #dc3545;
+    --success-color: #28a745;
+    --spacing-unit: 1rem;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    direction: rtl; /* Right-to-left for Arabic */
+    text-align: right;
+}
+
+.container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+h1, h2, h3 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.api-key-note {
+    background-color: var(--warning-color);
+    color: #333;
+    padding: 0.8rem 1.2rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ffbb33;
+    text-align: right;
+    direction: rtl;
+}
+.api-key-note strong {
+    color: #856404;
+}
+.api-key-note code {
+    background-color: rgba(0,0,0,0.05);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: monospace;
+}
+
+.upload-section, .prompt-section, .controls-section, .result-section, .help-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.drop-area {
+    border: 2px dashed var(--border-color);
+    border-radius: 5px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.drop-area:hover, .drop-area.dragover {
+    background-color: #eef;
+    border-color: var(--primary-color);
+}
+
+.drop-area p {
+    margin: 0;
+    color: #666;
+}
+
+.drop-area .highlight {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.file-name {
+    text-align: center;
+    margin-top: 0.5rem;
+    font-style: italic;
+    color: #555;
+}
+
+.canvas-container {
+    position: relative;
+    width: 100%;
+    /* Keep aspect ratio by setting padding-bottom based on expected aspect ratio */
+    /* If max-width for canvas is 800px and height is 600px, aspect ratio 4:3 -> 75% */
+    /* Dynamically adjust this if you want different aspect ratios or remove for static size */
+    padding-bottom: 75%; /* Assuming 4:3 aspect ratio for demonstration */
+    height: 0;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+    background-color: #f0f0f0; /* Checkerboard pattern for transparency */
+    background-image: linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc),
+                      linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc);
+    background-size: 16px 16px;
+    background-position: 0 0, 8px 8px;
+}
+
+#imageCanvas, #maskCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-color: transparent; /* Can be removed if checkerboard on container is sufficient */
+}
+
+/* Ensure mask canvas is on top for drawing */
+#maskCanvas {
+    z-index: 10;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="XX" height="XX" viewBox="0 0 XX XX" ><circle cx="XX" cy="XX" r="XX" fill="red" opacity="0.5" /></svg>') XX XX, auto; /* Placeholder for dynamic cursor */
+}
+
+.label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem; /* Space between items in a row */
+}
+
+.control-group .label {
+    margin-bottom: 0; /* Align with input */
+    flex-basis: 120px; /* Fixed width for labels */
+    flex-shrink: 0;
+}
+
+.control-group .slider {
+    flex-grow: 1; /* Slider takes remaining space */
+    max-width: 250px; /* Max width for slider */
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.control-group .value {
+    font-weight: bold;
+    min-width: 30px; /* Ensure value display doesn't jump */
+    text-align: left;
+}
+
+
+textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    resize: vertical;
+    font-size: 1rem;
+    line-height: 1.5;
+    direction: rtl;
+    text-align: right;
+}
+
+.button {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    white-space: nowrap; /* Prevent button text from wrapping */
+}
+
+.button.primary {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.button.primary:hover {
+    background-color: var(--primary-hover-color);
+    transform: translateY(-2px);
+}
+
+.button.secondary {
+    background-color: var(--secondary-color);
+    color: #fff;
+}
+
+.button.secondary:hover {
+    background-color: var(--secondary-hover-color);
+    transform: translateY(-2px);
+}
+
+#sendEditButton {
+    width: auto; /* Adjust to content */
+    margin-top: 1rem;
+}
+
+.example-prompts {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.example-tag {
+    background-color: #e0e0e0;
+    color: #555;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.example-tag:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.status-message {
+    margin-top: 1rem;
+    padding: 0.8rem;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    display: none; /* Hidden by default */
+}
+
+.status-message.success {
+    background-color: var(--success-color);
+    color: #fff;
+}
+
+.status-message.error {
+    background-color: var(--error-color);
+    color: #fff;
+}
+
+.loading-spinner {
+    display: none; /* Hidden by default */
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--primary-color);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 1.5rem auto;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.result-section img {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin-top: 1rem;
+    display: block; /* Ensure image takes full width of its container */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.result-section #downloadResultButton {
+    margin-top: 1rem;
+    display: block; /* Full width button */
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+}
+
+.help-section {
+    background-color: #e9f7ef; /* Light green background for help */
+    border-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.help-section h3 {
+    color: #0f5132;
+    text-align: right;
+    margin-bottom: 1rem;
+}
+
+.help-section ol {
+    padding-right: 20px; /* For RTL lists */
+    list-style-position: inside;
+}
+
+.help-section li {
+    margin-bottom: 0.5rem;
+}
+
+/* Toggle Switch Styling */
+.switch-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.toggle-switch {
+    position: absolute;
+    opacity: 0;
+}
+
+.toggle-label {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    background-color: #ccc;
+    border-radius: 34px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: auto; /* Pushes label to the left in RTL */
+    margin-right: 0;
+}
+
+.toggle-label::before {
+    content: '';
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-color: #fff;
+    top: 4px;
+    right: 4px; /* Position on the right for RTL */
+    transition: right 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch:checked + .toggle-label {
+    background-color: var(--primary-color);
+}
+
+.toggle-switch:checked + .toggle-label::before {
+    right: calc(100% - 30px); /* Move to the left for RTL */
+}
+
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .container {
+        margin: 1rem auto;
+        padding: 1rem;
+    }
+
+    .control-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+
+    .control-group .label {
+        width: 100%;
+        text-align: right;
+        margin-bottom: 0.2rem;
+    }
+
+    .control-group .slider, .control-group .value {
+        width: 100%;
+        margin: 0;
+    }
+
+    .prompt-section .button {
+        width: 100%;
+    }
+
+    .toggle-label {
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+    .switch-group {
+        flex-direction: row; /* Keep switches in a row on mobile */
+        justify-content: space-between;
+    }
+}
