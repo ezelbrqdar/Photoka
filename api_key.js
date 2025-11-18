@@ -1,6 +1,6 @@
 // Paste your OpenRouter API key here:
 // NEVER commit this file to a public repository!
-export const OPENROUTER_API_KEY = "YOUR_API_KEY_HERE";
+export const OPENROUTER_API_KEY = "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";
 
 // OpenRouter model identifier for inpainting/image editing.
 // For Nano banana (Gemini), verify the exact model ID on OpenRouter.
